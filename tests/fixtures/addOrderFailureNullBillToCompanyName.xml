@@ -1,0 +1,14 @@
+<addOrderResponse xmlns="http://webservices.replink.net">
+    <addOrderResult>
+        <orderItemAddReturn>
+            <replinkOrderCollection/>
+            <errorCollection>
+                <dtoErrorItem>
+                    <Name>Product Partnership error.</Name>
+                    <Property>Product_ID</Property>
+                    <Description>{5c7ae788-4813-4acb-822e-9932fcd0a6b9} Partnership is not found.</Description>
+                </dtoErrorItem>
+            </errorCollection>
+        </orderItemAddReturn>
+    </addOrderResult>
+</addOrderResponse>

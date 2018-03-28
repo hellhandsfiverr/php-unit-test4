@@ -1,0 +1,21 @@
+<addOrderResponse xmlns="http://webservices.replink.net">
+    <addOrderResult>
+        <orderItemAddReturn>
+            <replinkOrderCollection/>
+            <errorCollection>
+                <dtoErrorItem>
+                    <Name>Ship To Zip must contain a value</Name>
+                    <Property>shipToZip</Property>
+                    <Description>Ship To Zip must contain a value</Description>
+                </dtoErrorItem>
+                <dtoErrorItem>
+                    <Name>The shipping Zip Code is not properly formatted or does not match the shipping Country
+                        Code.
+                    </Name>
+                    <Property>red_ShipToZip</Property>
+                    <Description>red_ShipToZip is invalid</Description>
+                </dtoErrorItem>
+            </errorCollection>
+        </orderItemAddReturn>
+    </addOrderResult>
+</addOrderResponse>
