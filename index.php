@@ -6,13 +6,16 @@ $client->setUsername('username');
 $client->setPassword('password');
 $client->setLogger(\AllDigitalRewards\Vendor\Replink\Factory\LoggerFactory::getInstance());
 
+$availableTestProducts = [
+    'A5256B44-04F2-4225-BD23-EDFCCC9A8190',
+    'B5AC6532-12C6-4BC2-BDB6-59EC04B90435',
+    'E89A88B8-F775-4E63-BFB8-D689B6364C99',
+    '5F95538C-4017-43CE-847B-E2B44E00167A',
+    '28857426-2A2A-4120-9664-D94446BA5AD5'
+];
 $productA = new \AllDigitalRewards\Vendor\Replink\Entity\ProductRequest;
-$productA->setProductID('5C7AE788-4813-4ACB-822E-9932FCD0A6B9');
+$productA->setProductID($availableTestProducts[rand(0,4)]);
 $productA->setQuantity(1);
-
-$productB = new \AllDigitalRewards\Vendor\Replink\Entity\ProductRequest;
-$productB->setProductID('004700E1-CDAB-43EA-A07B-9A1F5E4EBB01');
-$productB->setQuantity(1);
 
 $productRequestContainer = [$productA];
 $data = [
@@ -36,4 +39,3 @@ $orderRequest = new \AllDigitalRewards\Vendor\Replink\Entity\OrderRequest($data)
 $response = $client->addOrder($orderRequest, $productRequestContainer);
 
 print_r($response);
-//print_r($client->getErrors());
