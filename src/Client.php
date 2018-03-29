@@ -35,11 +35,6 @@ class Client
     private $logger;
 
     /**
-     * @var ?array
-     */
-    private $request;
-
-    /**
      * @var array
      */
     private $errors = [];
@@ -164,7 +159,7 @@ class Client
             $this->setErrors($errors);
 
             if ($this->logger !== null) {
-                $this->getLogger()->warning('Replink order failure. Program: {program}, User Email: {email}', [
+                $this->getLogger()->warning('Replink order failure', [
                     $request->getProgramName(),
                     $request->getShipToEmail()
                 ]);
@@ -173,11 +168,13 @@ class Client
             return null;
         }
 
+        //Successful
+//        print_r($this->getSoapClient()->__getLastResponse());
         $parsedResponse = json_decode(json_encode($response->addOrderResult->orderItemAddReturn->replinkOrderCollection->replinkOrder), true);
-        $response = new OrderResponse($parsedResponse);
+        $response = new OrderResponse($parsedResponse[0]);
 
         if ($this->logger !== null) {
-            $this->getLogger()->notice('Replink order submitted. Order ID: {order_id}, Order Number: {order_number}', [
+            $this->getLogger()->notice('Replink order submitted', [
                 'order_id' => $response->getOrderID(),
                 'order_number' => $response->getOrderNumber()
             ]);
@@ -185,10 +182,6 @@ class Client
 
         return $response;
     }
-
-//        $response = simplexml_load_file(__DIR__ . '/../tests/fixtures/addOrderSuccess.xml');
-//        $response = simplexml_load_file(__DIR__.'/../tests/fixtures/addOrderFailureBadZip.xml');
-
 
     private function formatOrderProducts(array $products): array
     {

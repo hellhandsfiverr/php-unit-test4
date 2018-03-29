@@ -12,11 +12,6 @@ class LoggerFactory
      */
     private static $logger;
 
-    private function __construct()
-    {
-        //  Singletons do not like constructors.
-    }
-
     public static function getInstance()
     {
         if (self::$logger === null) {
