@@ -39,10 +39,6 @@ class Client
      */
     private $errors = [];
 
-    public function __construct(array $options = null)
-    {
-    }
-
     /**
      * @return string
      */
@@ -160,8 +156,11 @@ class Client
 
             if ($this->logger !== null) {
                 $this->getLogger()->warning('Replink order failure', [
-                    $request->getProgramName(),
-                    $request->getShipToEmail()
+                    'subsystem' => 'replink-fulfillment',
+                    'action' => 'generate order',
+                    'success' => false,
+                    'program' => $request->getProgramName(),
+                    'participant' => $request->getShipToEmail()
                 ]);
             }
 
@@ -169,14 +168,18 @@ class Client
         }
 
         //Successful
-//        print_r($this->getSoapClient()->__getLastResponse());
         $parsedResponse = json_decode(json_encode($response->addOrderResult->orderItemAddReturn->replinkOrderCollection->replinkOrder), true);
         $response = new OrderResponse($parsedResponse[0]);
 
         if ($this->logger !== null) {
             $this->getLogger()->notice('Replink order submitted', [
+                'subsystem' => 'replink-fulfillment',
+                'action' => 'generate order',
+                'success' => true,
                 'order_id' => $response->getOrderID(),
-                'order_number' => $response->getOrderNumber()
+                'order_number' => $response->getOrderNumber(),
+                'program' => $request->getProgramName(),
+                'participant' => $request->getShipToEmail()
             ]);
         }
 
