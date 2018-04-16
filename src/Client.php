@@ -4,6 +4,7 @@ namespace AllDigitalRewards\Vendor\Replink;
 
 use AllDigitalRewards\Vendor\Replink\Entity\OrderRequest;
 use AllDigitalRewards\Vendor\Replink\Entity\OrderResponse;
+use AllDigitalRewards\Vendor\Replink\Exception\ReplinkException;
 use Psr\Log\LoggerInterface;
 
 class Client
@@ -71,6 +72,8 @@ class Client
         $this->password = $password;
     }
 
+    // Maybe the consuming service should be responsible of logs..
+    // Not sure we want sdk's responsible for having loggers injected.
     /**
      * @return LoggerInterface
      */
@@ -140,9 +143,10 @@ class Client
     /**
      * @param OrderRequest $request
      * @param array $products
-     * @return OrderResponse|null
+     * @return OrderResponse
+     * @throws ReplinkException
      */
-    public function addOrder(OrderRequest $request, array $products): ?OrderResponse
+    public function addOrder(OrderRequest $request, array $products): OrderResponse
     {
         $request->setProgramID(self::PROGRAM_ID);
         $request->setProducts($this->formatOrderProducts($products));
@@ -155,7 +159,7 @@ class Client
             $this->setErrors($errors);
 
             if ($this->logger !== null) {
-                $this->getLogger()->warning('Replink order failure', [
+                $this->getLogger()->error('Replink order failure', [
                     'subsystem' => 'replink-fulfillment',
                     'action' => 'generate order',
                     'success' => false,
@@ -164,7 +168,7 @@ class Client
                 ]);
             }
 
-            return null;
+            throw new ReplinkException('There was an issue processing the addOrder request');
         }
 
         //Successful
