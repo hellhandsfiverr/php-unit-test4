@@ -219,13 +219,17 @@ class OrderRequest extends AbstractReplinkEntity
      */
     public function getShipToAddress2(): string
     {
+        if($this->shipToAddress2 === null) {
+            return '';
+        }
+
         return $this->shipToAddress2;
     }
 
     /**
-     * @param string $shipToAddress2
+     * @param null|string $shipToAddress2
      */
-    public function setShipToAddress2(string $shipToAddress2)
+    public function setShipToAddress2($shipToAddress2)
     {
         $this->shipToAddress2 = $shipToAddress2;
     }
