@@ -118,6 +118,10 @@ class OrderRequest extends AbstractReplinkEntity
      */
     public function setProgramName(string $programName)
     {
+        if (strlen($programName) > 20) {
+            $programName = substr($programName, 0, 20);
+        }
+
         $this->programName = $programName;
     }
 
