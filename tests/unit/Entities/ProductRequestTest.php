@@ -20,12 +20,12 @@ class ProductRequestTest extends TestCase
     public function testOpThirdPartyShippingSetterAndGetter()
     {
         $productRequest = $this->getProductRequest();
-        $this->assertSame(1, $productRequest->getOPThirdPartyShipping());
-        $this->assertTrue($productRequest->isOPThirdPartyShipping());
-
-        $productRequest->setOPThirdPartyShipping(0);
         $this->assertSame(0, $productRequest->getOPThirdPartyShipping());
         $this->assertFalse($productRequest->isOPThirdPartyShipping());
+
+        $productRequest->setOPThirdPartyShipping(1);
+        $this->assertSame(1, $productRequest->getOPThirdPartyShipping());
+        $this->assertTrue($productRequest->isOPThirdPartyShipping());
     }
 
     public function testQuantitySetterAndGetter()

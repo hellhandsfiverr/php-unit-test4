@@ -12,7 +12,7 @@ class ProductRequest extends AbstractReplinkEntity
     /**
      * @var int
      */
-    public $OP_ThirdPartyShipping = 1;
+    public $OP_ThirdPartyShipping = 0;
 
     /**
      * @var int
